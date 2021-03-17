@@ -1,8 +1,10 @@
 package ru.ifmo.cmath;
 
-import ru.ifmo.cmath.commands.CommandMapper;
 import ru.ifmo.cmath.commands.ICommand;
+import ru.ifmo.cmath.exceptions.NotCommandFoundException;
+import ru.ifmo.cmath.exceptions.NotFileFoundException;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -15,8 +17,7 @@ public class Main {
         commandMapper = new CommandMapper();
         in = new Scanner(System.in);
         context = new IContext() {
-            int accuracy = 0;
-            int sizeMatrix = 1;
+            double accuracy = 0.1D;
             @Override
             public void print(String s) {
                 System.out.print(s);
@@ -26,12 +27,12 @@ public class Main {
                 return in;
             }
             @Override
-            public void setAccuracy(int v) {
+            public void setAccuracy(double v) {
                 this.accuracy = v;
             }
             @Override
-            public void setSize(int v) {
-                this.sizeMatrix = v;
+            public double getAccuracy() {
+                return accuracy;
             }
         };
     }
@@ -41,20 +42,30 @@ public class Main {
     }
 
     public void start() {
-        String input;
+        String[] input;
         ICommand command;
 
         context.print("+-------------------------------------------+\n" +
               "|        SIMPLE ITERATION METHOD            |\n" +
               "+-------------------------------------------+\n");
+        context.print("Default accuracy=0.1D\n");
 
-        while (context.getReader().hasNext()) {
+        while (true) {
             context.print("cmath-lab1$ ");
-            input = context.getReader().nextLine();
-            command = commandMapper.findCommand(input);
+            input = context.getReader().nextLine().trim().split("(\\s++)");
 
-            if (command != null) command.execute(context);
-            else context.print("Command not found, check 'help'!\n");
+            try {
+                command = commandMapper.findCommand(input[0].toLowerCase());
+                command.execute(context, input);
+            } catch (NotCommandFoundException e) {
+                context.print("Command not found, check 'help'!\n");
+            }catch (NotFileFoundException e) {
+                context.print("Such file doesnt exist\n");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                context.print("Entered wrong args...\n");
+            } catch (NumberFormatException e) {
+                context.print("Entered number has wrong format\n");
+            }
         }
     }
 
