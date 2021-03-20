@@ -1,17 +1,19 @@
 package ru.ifmo.cmath.commands;
 
 import ru.ifmo.cmath.IContext;
+import ru.ifmo.cmath.algebra.Jacobi;
+import ru.ifmo.cmath.algebra.SystemSolver;
 import ru.ifmo.cmath.exceptions.NotFileFoundException;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class SolveMatrix implements ICommand {
     private int size = -1;
     private double[][] matrix;
+    private final SystemSolver solver = new SystemSolver();
 
     @Override
     public void execute(IContext context, String[] args) {
@@ -28,13 +30,20 @@ public class SolveMatrix implements ICommand {
             size = Integer.parseInt(args[2]);
             readFromConsole(context.getReader());
         }
-        if (size < 1 || size > 20) {
+        if ((size < 1 || size > 20) || matrix == null) {
             throw new NumberFormatException();
         }
 
-
-        System.out.println(Arrays.deepToString(matrix));
+        Jacobi jacobi = new Jacobi(matrix, size);
+        context.print(jacobi.getMatrixAsString());
+        if (!jacobi.makeDominant()) {
+            context.print("Impossible to determinate diagonally dominant: iterations method can diverge.");
+        } else {
+            solver.solveWithJacoby(jacobi, context.getAccuracy());
+            context.print(jacobi.toString());
+        }
     }
+
 
     public void readFromConsole(Scanner in) {
         matrix = new double[size][size+1];

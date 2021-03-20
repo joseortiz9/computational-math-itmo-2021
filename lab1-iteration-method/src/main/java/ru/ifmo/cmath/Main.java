@@ -17,7 +17,7 @@ public class Main {
         commandMapper = new CommandMapper();
         in = new Scanner(System.in);
         context = new IContext() {
-            double accuracy = 0.1D;
+            double accuracy = 1E-5;// 0.00001D
             @Override
             public void print(String s) {
                 System.out.print(s);
@@ -48,7 +48,7 @@ public class Main {
         context.print("+-------------------------------------------+\n" +
               "|        SIMPLE ITERATION METHOD            |\n" +
               "+-------------------------------------------+\n");
-        context.print("Default accuracy=0.1D\n");
+        context.print("Default accuracy="+context.getAccuracy()+"D\n");
 
         while (true) {
             context.print("cmath-lab1$ ");
