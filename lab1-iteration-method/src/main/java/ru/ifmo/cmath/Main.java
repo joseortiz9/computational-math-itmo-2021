@@ -5,6 +5,7 @@ import ru.ifmo.cmath.exceptions.NotCommandFoundException;
 import ru.ifmo.cmath.exceptions.NotFileFoundException;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +18,7 @@ public class Main {
         commandMapper = new CommandMapper();
         in = new Scanner(System.in);
         context = new IContext() {
-            double accuracy = 1E-5;// 0.00001D
+            double accuracy = 1E-15;// 0.00001D
             @Override
             public void print(String s) {
                 System.out.print(s);
@@ -63,6 +64,8 @@ public class Main {
                 context.print("Such file doesnt exist\n");
             } catch (ArrayIndexOutOfBoundsException e) {
                 context.print("Entered wrong args...\n");
+            } catch (NoSuchElementException e) {
+                context.print(e.getMessage()+ "\n");
             } catch (NumberFormatException e) {
                 context.print("Entered number has wrong format\n");
             }

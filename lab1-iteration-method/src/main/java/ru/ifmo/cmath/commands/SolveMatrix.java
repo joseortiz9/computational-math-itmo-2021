@@ -35,10 +35,11 @@ public class SolveMatrix implements ICommand {
         }
 
         Jacobi jacobi = new Jacobi(matrix, size);
-        context.print(jacobi.getMatrixAsString());
+        context.print("Checking if matrix is diagonally dominant...\n");
         if (!jacobi.makeDominant()) {
-            context.print("Impossible to determinate diagonally dominant: iterations method can diverge.");
+            context.print("Impossible to determinate diagonally dominant: iterations method can diverge.\n");
         } else {
+            context.print(jacobi.printSystem());
             solver.solveWithJacoby(jacobi, context.getAccuracy());
             context.print(jacobi.toString());
         }
