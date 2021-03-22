@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/computational-math-itmo-2021.iml" filepath="$PROJECT_DIR$/computational-math-itmo-2021.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lab1-iteration-method/lab1-iteration-method.iml" filepath="$PROJECT_DIR$/lab1-iteration-method/lab1-iteration-method.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab1-jacobi-iterations-method/lab1-jacobi-iterations-method.iml" filepath="$PROJECT_DIR$/lab1-jacobi-iterations-method/lab1-jacobi-iterations-method.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab2-simple-iteration-method/lab2-simple-iteration-method.iml" filepath="$PROJECT_DIR$/lab2-simple-iteration-method/lab2-simple-iteration-method.iml" />
     </modules>
   </component>
 </project>

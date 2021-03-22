@@ -4,6 +4,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/lab1-iteration-method/pom.xml" />
+        <option value="$PROJECT_DIR$/lab2-simple-iteration-method/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1-jacobi-iterations-method/pom.xml" />
       </list>
     </option>
   </component>

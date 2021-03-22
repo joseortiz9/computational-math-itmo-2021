@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="lab1-iteration-method" />
+        <module name="lab1-jacobi-iterations-method" />
+        <module name="lab2-simple-iteration-method" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="lab1-iteration-method" target="8" />
+      <module name="lab1-jacobi-iterations-method" target="8" />
+      <module name="lab2-simple-iteration-method" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -46,9 +46,9 @@ public class Main {
         String[] input;
         ICommand command;
 
-        context.print("+-------------------------------------------+\n" +
-              "|        SIMPLE ITERATION METHOD            |\n" +
-              "+-------------------------------------------+\n");
+        context.print("+———————————————————————————————————————————+\n" +
+                      "│        JACOBI ITERATIONS METHOD           │\n" +
+                      "+———————————————————————————————————————————+\n");
         context.print("Default accuracy="+context.getAccuracy()+"D\n");
 
         while (true) {
