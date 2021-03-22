@@ -49,7 +49,28 @@ public class Jacobi {
     }
 
     public void permuteRows() {
-
+        int maxItemIndex = 0;
+        int rowMaxItem = 0;
+        //search if the max item is located in the diagonal
+        for (int i = 0; i < size; i++) {
+            maxItemIndex = 0;
+            for (int j = 0; j < size; j++) {
+                if (Math.abs(diagDomMatrix[i][maxItemIndex]) < Math.abs(diagDomMatrix[i][j])) {
+                    maxItemIndex = j;
+                }
+            }
+            if (diagDomMatrix[i][maxItemIndex] != diagDomMatrix[i][i]) {
+                rowMaxItem = i;
+                break;
+            }
+        }
+        //interchange rows according of where the max item is located
+        for (int i = 0; i < diagDomMatrix[rowMaxItem].length; i++) {
+            // Swap two numbers
+            double temp = diagDomMatrix[rowMaxItem][i];
+            diagDomMatrix[rowMaxItem][i] = diagDomMatrix[maxItemIndex][i];
+            diagDomMatrix[maxItemIndex][i] = temp;
+        }
     }
 
 
