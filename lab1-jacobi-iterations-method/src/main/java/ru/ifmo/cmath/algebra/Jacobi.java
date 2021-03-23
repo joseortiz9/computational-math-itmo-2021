@@ -20,6 +20,7 @@ public class Jacobi {
 
     public boolean makeDominant() {
         int permutations = 0;
+        if (!hasSolution()) return false;
         while (MAX_PERMUTATIONS > permutations) {
             if (isDiagonallyDominant()) {
                 matrix = diagDomMatrix;
@@ -71,6 +72,17 @@ public class Jacobi {
             diagDomMatrix[rowMaxItem][i] = diagDomMatrix[maxItemIndex][i];
             diagDomMatrix[maxItemIndex][i] = temp;
         }
+    }
+
+    public boolean hasSolution() {
+        for (int i = 0; i < size; i++) {
+            double e = 0;
+            for (int j = 0; j < size; j++) {
+                if (get(i,j) != 0) e = get(i, j);
+            }
+            if (e == 0) return false;
+        }
+        return true;
     }
 
 
