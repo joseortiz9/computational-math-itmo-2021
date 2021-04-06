@@ -65,27 +65,30 @@ public class Main {
     private void solveNonlinearEquation(IFunction function) {
         readAndSetAccuracy();
 
-        print("Initial left guess: "); double a = scanner.nextDouble();
-        print("Initial right guess: "); double b = scanner.nextDouble();
+        double a = -5, b = 5;
+        print("Initial left border: "); a = scanner.nextDouble();
+        print("Initial right border: "); b = scanner.nextDouble();
 
-        //Graphic.setData(0, equations);
+        if (a > b) {
+            double temp = a;
+            a = b;
+            b = temp;
+        }
 
         print("Tangents method: ");
         try {
             Object[] result = solver.tangentsMethod(function, a, b);
-            print("[x = %.18f, Δx = %.18f, iters = %d times]%n", result[0], result[1], result[2]);
-        }
-        catch (RuntimeException e) {
-            print("%s%n", e.getMessage());
+            print("[x = %.18f, iters = %d times]\n", result[0], result[1]);
+        } catch (RuntimeException e) {
+            print("%s\n", e.getMessage());
         }
 
         print("Secant method: ");
         try {
             Object[] result = solver.secantMethod(function, a, b);
-            print("[x = %.18f, iters = %d times]%n", result[0], result[1]);
-        }
-        catch (RuntimeException e) {
-            print("%s%n", e.getMessage());
+            print("[x = %.18f, iters = %d times]\n", result[0], result[1]);
+        } catch (RuntimeException e) {
+            print("%s\n", e.getMessage());
         }
     }
 
