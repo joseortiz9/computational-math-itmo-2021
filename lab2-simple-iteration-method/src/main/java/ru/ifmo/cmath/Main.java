@@ -1,9 +1,6 @@
 package ru.ifmo.cmath;
 
-import ru.ifmo.cmath.algebra.IFunction;
-import ru.ifmo.cmath.algebra.ISystem;
-import ru.ifmo.cmath.algebra.MathFunctions;
-import ru.ifmo.cmath.algebra.NonLinearEqSolver;
+import ru.ifmo.cmath.algebra.*;
 import ru.ifmo.cmath.exceptions.NotCommandFoundException;
 import ru.ifmo.cmath.graphing.GraphBuilder;
 
@@ -18,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         new Main().start();
-        new GraphBuilder().run();
+        //new GraphBuilder().run();
     }
 
     public void start() {
@@ -88,9 +85,14 @@ public class Main {
         try {
             Object[] result = solver.secantMethod(function, a, b);
             print("[x = %.18f, iters = %d times]\n", result[0], result[1]);
+
+            GraphBuilder.setData(function);
+            GraphBuilder.setSolution(new Point(Double.parseDouble(String.valueOf(result[0])), 0));
+            new GraphBuilder().run();
         } catch (RuntimeException e) {
             print("%s\n", e.getMessage());
         }
+        exit();
     }
 
 
@@ -107,12 +109,17 @@ public class Main {
         try {
             Object[][] result = solver.iterationsMethod(system);
             print("[x = %.18f, Δx = %.18f]%n", result[0][0], result[0][1]);
-            print("                    ");
+            print("                   ");
             print("[y = %.18f, Δy = %.18f]%n", result[1][0], result[1][1]);
-            print("                    [iters = %d]%n", result[2][0]);
+            print("                   [iters = %d]%n", result[2][0]);
+
+            GraphBuilder.setData(system);
+            GraphBuilder.setSolution(new Point(Double.parseDouble(String.valueOf(result[0][0])), Double.parseDouble(String.valueOf(result[1][0]))));
+            new GraphBuilder().run();
         } catch (RuntimeException e) {
             print("%s\n", e.getMessage());
         }
+        exit();
     }
 
 
