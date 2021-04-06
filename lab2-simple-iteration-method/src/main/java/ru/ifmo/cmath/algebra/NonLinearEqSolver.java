@@ -14,7 +14,7 @@ public class NonLinearEqSolver {
         int iterations = 0;
 
         if (fun.solveForX(a) * fun.solveForX(b) > 0)
-            throw new NumberFormatException("Not possible to calculate root in this interval");
+            throw new RuntimeException("Not possible to calculate root in this interval");
 
         c = (fun.deriveForX(a) * fun.secondDeriveForX(a) > 0) ? a : b;
         do {
@@ -26,7 +26,7 @@ public class NonLinearEqSolver {
         while (Math.abs(funcOnC) >= ACCURACY);
 
         if (iterations == LIMIT_ITERATIONS)
-            throw new NumberFormatException("Specified accuracy is not achieved under limited iterations");
+            throw new RuntimeException("Specified accuracy is not achieved under limited iterations");
 
         return new Object[] { c, iterations };
     }
@@ -42,13 +42,13 @@ public class NonLinearEqSolver {
         int iterations = 0;
 
         if (funcOnLeft * funcOnRight > 0)
-            throw new NumberFormatException("Not possible to calculate root in this interval");
+            throw new RuntimeException("Not possible to calculate root in this interval");
 
         do {
             funcOnLeft = fun.solveForX(left);
             funcOnRight = fun.solveForX(right);
             if(funcOnLeft == funcOnRight)
-                throw new NumberFormatException("Solution cannot be found as the values of a and b are same");
+                throw new RuntimeException("Solution cannot be found as the values of a and b are same");
 
             c = (left * funcOnRight - right * funcOnLeft) / (funcOnRight - funcOnLeft);
             left = right;
@@ -59,9 +59,31 @@ public class NonLinearEqSolver {
         } while(Math.abs(funcOnC) >= ACCURACY);
 
         if (iterations == LIMIT_ITERATIONS)
-            throw new NumberFormatException("Specified accuracy is not achieved under limited iterations");
+            throw new RuntimeException("Specified accuracy is not achieved under limited iterations");
 
         return new Object[] { c, iterations };
+    }
+
+
+    public Object[][] iterationsMethod(ISystem system) {
+        double prevX = 0, prevY = 0, x, y, delta1, delta2;
+        int iterations = 0;
+        do {
+            x = system.clearedForX(prevY);
+            y = system.clearedForY(prevX);
+            delta1 = system.solveFunction1(x, y);
+            delta2 = system.solveFunction2(x, y);
+            prevX = x;
+            prevY = y;
+            iterations++;
+            if(iterations == LIMIT_ITERATIONS) break;
+        }while(Math.abs(delta1) > ACCURACY && Math.abs(delta2) > ACCURACY);
+
+        if (Double.isNaN(x) || Double.isNaN(y) || iterations == LIMIT_ITERATIONS) {
+            throw new RuntimeException("Couldn't achieved specified accuracy");
+        }
+
+        return new Object[][] {{ x, x - prevX }, { y, y - prevY }, { iterations }};
     }
 
 

@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 public class MathFunctions {
     private final ArrayList<IFunction> availableFunctions = new ArrayList<>();
-    private final ArrayList<IFunction> availableSystems = new ArrayList<>();
+    private final ArrayList<ISystem> availableSystems = new ArrayList<>();
 
     {
         availableFunctions.add(new IFunction() {
@@ -78,10 +78,36 @@ public class MathFunctions {
                 return 3;
             }
         });
+
+        availableSystems.add(new ISystem() {
+            @Override
+            public String toString() {
+                return "[x^2 + y^2 = 3 ; 2x + 3y = 1]";
+            }
+            @Override
+            public double clearedForX(double y) {
+                return Math.pow(3-Math.pow(y, 2), 0.5);
+            }
+            @Override
+            public double clearedForY(double x) {
+                return (1-2*x)/3;
+            }
+            @Override
+            public double solveFunction1(double x, double y) {
+                return Math.pow(x,2)+Math.pow(y,2)-3;
+            }
+            @Override
+            public double solveFunction2(double x, double y) {
+                return 2*x+3*y-1;
+            }
+        });
     }
 
     public ArrayList<IFunction> getAvailableFunctions() {
         return availableFunctions;
+    }
+    public ArrayList<ISystem> getAvailableSystems() {
+        return availableSystems;
     }
 }
 

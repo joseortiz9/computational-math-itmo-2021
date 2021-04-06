@@ -1,6 +1,7 @@
 package ru.ifmo.cmath;
 
 import ru.ifmo.cmath.algebra.IFunction;
+import ru.ifmo.cmath.algebra.ISystem;
 import ru.ifmo.cmath.algebra.MathFunctions;
 import ru.ifmo.cmath.algebra.NonLinearEqSolver;
 import ru.ifmo.cmath.exceptions.NotCommandFoundException;
@@ -92,8 +93,26 @@ public class Main {
         }
     }
 
-    public void readSystemOfEquations () {
 
+    public void readSystemOfEquations() {
+        for (int i = 0; i < mathFunctions.getAvailableSystems().size(); i++) {
+            print("(%s) %s%n", i+1, mathFunctions.getAvailableSystems().get(i));
+        }
+        solveNonlinearSystem(mathFunctions.getAvailableSystems().get(Integer.parseInt(input())-1));
+    }
+
+    public void solveNonlinearSystem(ISystem system) {
+        readAndSetAccuracy();
+        print("Iterations method: ");
+        try {
+            Object[][] result = solver.iterationsMethod(system);
+            print("[x = %.18f, Δx = %.18f]%n", result[0][0], result[0][1]);
+            print("                    ");
+            print("[y = %.18f, Δy = %.18f]%n", result[1][0], result[1][1]);
+            print("                    [iters = %d]%n", result[2][0]);
+        } catch (RuntimeException e) {
+            print("%s\n", e.getMessage());
+        }
     }
 
 
