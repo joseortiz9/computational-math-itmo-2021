@@ -51,9 +51,9 @@ public class NonLinearEqSolver {
                 throw new RuntimeException("Solution cannot be found as the values of a and b are same");
 
             c = (left * funcOnRight - right * funcOnLeft) / (funcOnRight - funcOnLeft);
-            left = right;
-            right = c;
             funcOnC = fun.solveForX(c);
+            if (funcOnLeft * funcOnC < 0) right = c;
+            else if(funcOnC * funcOnRight < 0) left = c;
             iterations++;
             if(iterations == LIMIT_ITERATIONS) break;
         } while(Math.abs(funcOnC) >= ACCURACY);
@@ -64,9 +64,11 @@ public class NonLinearEqSolver {
         return new Object[] { c, iterations };
     }
 
-
+    /**
+     * Решает нелинейные системные уравнения методом простых итерации.
+     */
     public Object[][] iterationsMethod(ISystem system) {
-        double prevX = 0, prevY = 0, x, y, delta1, delta2;
+        double prevX = 1, prevY = 1, x, y, delta1, delta2;
         int iterations = 0;
         do {
             x = system.clearedForX(prevY);

@@ -108,6 +108,36 @@ public class MathFunctions {
                 return 2*x+3*y-1;
             }
         });
+
+        availableSystems.add(new ISystem() {
+            @Override
+            public ArrayList<Function<Double, Double>> getDraw() {
+                ArrayList<Function<Double, Double>> ar = new ArrayList<>();
+                ar.add(x -> 3 - Math.pow(x, 2));
+                ar.add(x -> x+1);
+                return ar;
+            }
+            @Override
+            public String toString() {
+                return "[3 - x^2 = y ; x + 1 = y]";
+            }
+            @Override
+            public double clearedForX(double y) {
+                return Math.sqrt(3-y);
+            }
+            @Override
+            public double clearedForY(double x) {
+                return x+1;
+            }
+            @Override
+            public double solveFunction1(double x, double y) {
+                return 3 - Math.pow(x,2) - y;
+            }
+            @Override
+            public double solveFunction2(double x, double y) {
+                return x+1-y;
+            }
+        });
     }
 
     public ArrayList<IFunction> getAvailableFunctions() {
