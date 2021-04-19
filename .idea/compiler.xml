@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="lab1-jacobi-iterations-method" />
         <module name="lab2-simple-iteration-method" />
+        <module name="lab3-simpson-method" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lab1-jacobi-iterations-method" target="8" />
       <module name="lab2-simple-iteration-method" target="9" />
+      <module name="lab3-simpson-method" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>
