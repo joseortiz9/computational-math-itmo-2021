@@ -26,6 +26,9 @@ public class IntegralAnswer {
     public Integer getParts() {
         return parts;
     }
+    public Double getLastNormalValue() {
+        return lastNormalValue;
+    }
 
     public void setResult(double result) {
         this.result = result;

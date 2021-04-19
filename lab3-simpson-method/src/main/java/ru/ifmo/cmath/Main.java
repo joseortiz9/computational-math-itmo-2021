@@ -52,6 +52,9 @@ public class Main {
                 print("Area =  %.18f\n", answer.getResult());
                 print("Divisions =  %d parts\n", answer.getParts());
                 print("Error margin =  %.18f\n", answer.getError());
+                if(Double.isNaN(answer.getResult()) || Double.isInfinite(answer.getResult())) {
+                    print("There is an endpoint that doesn't belong to the domain of the function. Thus, the integral cannot be approximated.\n");
+                }
                 print("\n");
 
             } catch (Throwable e) {

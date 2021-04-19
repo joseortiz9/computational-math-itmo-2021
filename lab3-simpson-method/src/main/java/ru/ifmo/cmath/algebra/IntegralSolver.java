@@ -38,7 +38,7 @@ public class IntegralSolver {
                 lastNormalValue = oldValue;
             }
             if (partitions > LIMIT || partitions < 0) {
-                throw new IllegalArgumentException("Partition overflow");
+                throw new IllegalArgumentException("Partition overflow, and possibly the integral diverges");
             }
             lastDelta = delta;
         }
