@@ -37,10 +37,22 @@ public class Main {
                 print("Lower limit of integration: "); lower = scanner.nextDouble();
                 print("Upper limit of integration: "); upper = scanner.nextDouble();
 
+                boolean hasSignChange = false;
+                if (lower > upper) {
+                    double t = upper;
+                    upper = lower;
+                    lower = t;
+                    hasSignChange = true;
+                }
+
                 IntegralAnswer answer = solver.bySimpsonsRule(new Integral(chosenFunc).from(lower).to(upper));
+                if (hasSignChange)
+                    answer.setResult(-1d * answer.getResult());
+
                 print("Area =  %.18f\n", answer.getResult());
                 print("Divisions =  %d parts\n", answer.getParts());
                 print("Error margin =  %.18f\n", answer.getError());
+                print("\n");
 
             } catch (Throwable e) {
                 print(e.getMessage()+"\n");
