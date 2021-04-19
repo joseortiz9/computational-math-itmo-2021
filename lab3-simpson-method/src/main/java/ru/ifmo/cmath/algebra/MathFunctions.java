@@ -50,11 +50,11 @@ public class MathFunctions {
         availableFunctions.add(new IFunction() {
             @Override
             public String toString() {
-                return "y = x/(x^4 + 4)";
+                return "y = log(|x|)";
             }
             @Override
             public Function<Double, Double> getFunction() {
-                return x -> x /(Math.pow(x, 4) +4);
+                return x -> Math.log(Math.abs(x));
             }
         });
     }

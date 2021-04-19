@@ -26,13 +26,12 @@ public class IntegralSolver {
 
     public IntegralAnswer bySimpsonsRule(Integral integral) {
         int partitions = 10;
-        double lastAccuracy = 0d, lastNormalValue = 0d;
-        double actualAccuracy = Double.MAX_VALUE;
+        double delta = Double.MAX_VALUE, lastDelta = 0d, lastNormalValue = 0d;
         double oldValue = solveStepBySimpsonsRule(integral, partitions);
-        while (actualAccuracy > ACCURACY) {
+        while (delta > ACCURACY) {
             partitions = partitions * 2;
             double actualValue = solveStepBySimpsonsRule(integral, partitions);
-            actualAccuracy = rungeMethod(actualValue, oldValue);
+            delta = rungeMethod(actualValue, oldValue);
             oldValue = actualValue;
 
             if (!Double.isNaN(oldValue) && !Double.isInfinite(oldValue)) {
@@ -41,10 +40,10 @@ public class IntegralSolver {
             if (partitions > LIMIT || partitions < 0) {
                 throw new IllegalArgumentException("Partition overflow");
             }
-            lastAccuracy = actualAccuracy;
+            lastDelta = delta;
         }
 
-        return new IntegralAnswer(oldValue, lastAccuracy, partitions, lastNormalValue);
+        return new IntegralAnswer(oldValue, lastDelta, partitions, lastNormalValue);
     }
 
     public double rungeMethod(double actualValue, double oldValue) {
