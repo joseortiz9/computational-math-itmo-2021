@@ -45,7 +45,29 @@ public class Main {
                     hasSignChange = true;
                 }
 
-                IntegralAnswer answer = solver.bySimpsonsRule(new Integral(chosenFunc).from(lower).to(upper));
+                IntegralAnswer answer = null;
+                if ((Double.isNaN(chosenFunc.solveForX(0)) || Double.isInfinite(chosenFunc.solveForX(0)))
+                        && lower == 0 || upper == 0) {
+                    if (lower == 0 && upper > 0) {
+                        lower += 0.000001;
+                        answer = solver.bySimpsonsRule(new Integral(chosenFunc).from(lower).to(upper));
+                    } else if (upper == 0 && lower < 0) {
+                        upper -= 0.000001;
+                        answer = solver.bySimpsonsRule(new Integral(chosenFunc).from(lower).to(upper));
+                    }
+                    if ((lower < 0 && upper > 0)) {
+                        lower -= 0.000001;
+                        upper += 0.000001;
+                        //before zero
+                        answer = solver.bySimpsonsRule(new Integral(chosenFunc).from(lower).to(-0.001));
+                        //after zero with calculated value
+                        double ans2 = Double.sum(answer.getResult(), solver.bySimpsonsRule(new Integral(chosenFunc).from(0.001).to(upper)).getResult());
+                        answer.setResult(ans2);
+                    }
+                } else {
+                    answer = solver.bySimpsonsRule(new Integral(chosenFunc).from(lower).to(upper));
+                }
+
                 if (hasSignChange)
                     answer.setResult(-1d * answer.getResult());
 
@@ -53,7 +75,7 @@ public class Main {
                 print("Divisions =  %d parts\n", answer.getParts());
                 print("Error margin =  %.18f\n", answer.getError());
                 if(Double.isNaN(answer.getResult()) || Double.isInfinite(answer.getResult())) {
-                    print("There is an endpoint that doesn't belong to the domain of the function. Thus, the integral cannot be approximated.\n");
+                    print("There is an endpoint that doesn't belong to the domain of the function. \nThus, the integral cannot be approximated.\n");
                 }
                 print("\n");
 
