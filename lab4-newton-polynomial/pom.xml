@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.ifmo.cmath</groupId>
-    <artifactId>lab3-simpson-method</artifactId>
+    <artifactId>lab4-newton-polynomial</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 

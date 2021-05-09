@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/lab1-jacobi-iterations-method/lab1-jacobi-iterations-method.iml" filepath="$PROJECT_DIR$/lab1-jacobi-iterations-method/lab1-jacobi-iterations-method.iml" />
       <module fileurl="file://$PROJECT_DIR$/lab2-simple-iteration-method/lab2-simple-iteration-method.iml" filepath="$PROJECT_DIR$/lab2-simple-iteration-method/lab2-simple-iteration-method.iml" />
       <module fileurl="file://$PROJECT_DIR$/lab3-simpson-method/lab3-simpson-method.iml" filepath="$PROJECT_DIR$/lab3-simpson-method/lab3-simpson-method.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab4-newton-polynomial/lab4-newton-polynomial.iml" filepath="$PROJECT_DIR$/lab4-newton-polynomial/lab4-newton-polynomial.iml" />
     </modules>
   </component>
 </project>
