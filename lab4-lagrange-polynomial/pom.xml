@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.ifmo.cmath</groupId>
-    <artifactId>lab4-newton-polynomial</artifactId>
+    <artifactId>lab4-lagrange-polynomial</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -50,6 +50,12 @@
     </build>
 
     <dependencies>
+        <!-- For parsing math expressions -->
+        <dependency>
+            <groupId>pl.joegreen</groupId>
+            <artifactId>lambda-from-string</artifactId>
+            <version>1.7</version>
+        </dependency>
         <!-- For parsing math expressions -->
         <dependency>
             <groupId>net.objecthunter</groupId>

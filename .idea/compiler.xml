@@ -7,9 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="lab2-simple-iteration-method" />
+        <module name="lab4-lagrange-polynomial" />
         <module name="lab1-jacobi-iterations-method" />
         <module name="lab3-simpson-method" />
-        <module name="lab4-newton-polynomial" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,7 +17,7 @@
       <module name="lab2-simple-iteration-method" target="9" />
       <module name="lab3-simpson-method" target="9" />
       <module name="lab4-lagrange-method" target="9" />
-      <module name="lab4-newton-polynomial" target="9" />
+      <module name="lab4-lagrange-polynomial" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>
