@@ -30,11 +30,11 @@ public class MathFunctions {
         availableFunctions.add(new IFunction() {
             @Override
             public String toString() {
-                return "y = 3x^3 - 2x^2 +2";
+                return "y = sin(x)/x";
             }
             @Override
             public Function<Double, Double> getFunction() {
-                return x -> 3 * Math.pow(x, 3) - 2 * Math.pow(x, 2) + 2;
+                return x -> Math.sin(x)/x;
             }
         });
         availableFunctions.add(new IFunction() {
