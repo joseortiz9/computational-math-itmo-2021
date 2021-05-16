@@ -9,6 +9,10 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import ru.ifmo.cmath.algebra.IFunction;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class GraphBuilder extends Application {
 
     @FXML private LineChart<Number, Number> lineChart;
@@ -35,8 +39,10 @@ public class GraphBuilder extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        xLowerLimit = xPoints[0]; xUpperLimit = xPoints[xPoints.length-1];
-        yLowerLimit = yPoints[0]; yUpperLimit = yPoints[yPoints.length-1];
+        List<Double> xPointsList = Arrays.asList(xPoints);
+        List<Double> yPointsList = Arrays.asList(yPoints);
+        xLowerLimit = Collections.min(xPointsList); xUpperLimit = Collections.max(xPointsList);
+        yLowerLimit = Collections.min(yPointsList); yUpperLimit = Collections.max(yPointsList);
         funcStep = 0.2;
         //funcStep = (lowerLimit - upperLimit) / 4096;
         xLowerLimit -= 10; xUpperLimit += 10;

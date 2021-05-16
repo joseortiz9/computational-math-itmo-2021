@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private final static Double[] DEFAULT_X_POINTS = new Double[] {-4.5, 0.3, 2.35, 23.4565 };
+    private final static Double[] DEFAULT_X_POINTS = new Double[] {0.3, -5.554, 21.41, 3.1 };
 
     private final Scanner scanner = new Scanner(System.in);
     private final MathFunctions mathFunctions = new MathFunctions();
