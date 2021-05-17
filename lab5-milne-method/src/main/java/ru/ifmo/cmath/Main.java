@@ -52,9 +52,16 @@ public class Main {
 
                 List<Point> axisData = solver.solveByMilne(chosenFunc, initialPoint, end);
                 printResult(axisData);
-                Function lagrangianPolynomial = new LagrangePolynomial().setAxisData(axisData).build();
-
-                GraphBuilder.setData(chosenFunc, lagrangianPolynomial);
+                Function lagrangianPolynomial = null;
+                try {
+                    lagrangianPolynomial = new LagrangePolynomial().setAxisData(axisData).build();
+                } catch (Throwable e) {
+                    print(e.getMessage()+"\n");
+                }
+                if (lagrangianPolynomial == null)
+                    GraphBuilder.setData(chosenFunc, axisData);
+                else
+                    GraphBuilder.setData(chosenFunc, lagrangianPolynomial);
                 new GraphBuilder().run();
                 exit();
 

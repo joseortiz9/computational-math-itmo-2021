@@ -8,14 +8,18 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import ru.ifmo.cmath.algebra.Function;
+import ru.ifmo.cmath.utils.Point;
+
+import java.util.List;
 
 public class GraphBuilder extends Application {
 
     @FXML private LineChart<Number, Number> lineChart;
     private static Function originalFunc = null;
     private static Function lagrangeFunc = null;
+    private static List<Point> lagrangePoints = null;
     private double xLowerLimit = -10d;
-    private double xUpperLimit = 10d;;
+    private double xUpperLimit = 10d;
     private double yLowerLimit = -10d;
     private double yUpperLimit = 10d;
     private double funcStep = 0.001d;
@@ -23,6 +27,11 @@ public class GraphBuilder extends Application {
     public static void setData(Function originalFunc, Function lagrangeFunc) {
         GraphBuilder.originalFunc = originalFunc;
         GraphBuilder.lagrangeFunc = lagrangeFunc;
+    }
+
+    public static void setData(Function originalFunc, List<Point> lagrangePoints) {
+        GraphBuilder.originalFunc = originalFunc;
+        GraphBuilder.lagrangePoints = lagrangePoints;
     }
 
     public void run() {
@@ -35,12 +44,17 @@ public class GraphBuilder extends Application {
 //                new NumberAxis(((int)xLowerLimit), ((int)xUpperLimit), 2),
 //                new NumberAxis(((int)yLowerLimit), ((int)yUpperLimit), 2));
 
-        LineChart<Number, Number> chart = new LineChart<>(new NumberAxis(), new NumberAxis());
+        LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
         Scene scene = new Scene(lineChart, 900, 600);
 
         XYChart.Series series1 = createDrawableFunc(originalFunc);
         series1.setName("Original function f(x)");
-        XYChart.Series series2 = createDrawableFunc(lagrangeFunc);
+
+        XYChart.Series series2 = null;
+        if (lagrangeFunc != null)
+            series2 = createDrawableFunc(lagrangeFunc);
+        else
+            series2 = drawPoints(lagrangePoints);
         series2.setName("Final function L(x)");
 
         lineChart.getData().addAll(series1, series2);
@@ -61,10 +75,10 @@ public class GraphBuilder extends Application {
         return series;
     }
 
-    private XYChart.Series createDrawablePointsFromFunc(Function function, Double[] points) {
+    private XYChart.Series drawPoints(List<Point> axisData) {
         XYChart.Series<Double, Double> series = new XYChart.Series<>();
-        for (Double xPoint : points) {
-            series.getData().add(new XYChart.Data<>(xPoint, function.apply(xPoint)));
+        for (Point point : axisData) {
+            series.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
         }
         return series;
     }
