@@ -47,8 +47,8 @@ public class GraphBuilder extends Application {
         LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
         Scene scene = new Scene(lineChart, 900, 600);
 
-        XYChart.Series series1 = createDrawableFunc(originalFunc);
-        series1.setName("Original function f(x)");
+//        XYChart.Series series1 = createDrawableFunc(originalFunc);
+//        series1.setName("Original function f(x)");
 
         XYChart.Series series2 = null;
         if (lagrangeFunc != null)
@@ -57,10 +57,10 @@ public class GraphBuilder extends Application {
             series2 = drawPoints(lagrangePoints);
         series2.setName("Final function L(x)");
 
-        lineChart.getData().addAll(series1, series2);
+        lineChart.getData().addAll(series2);
 
         //remove ugly visual points from functions
-        removeChartLineSymbol(series1, series2);
+        removeChartLineSymbol(series2);
 
         stage.setTitle("Ordinary Differential Equation Solver (Milne's Method)");
         stage.setScene(scene);

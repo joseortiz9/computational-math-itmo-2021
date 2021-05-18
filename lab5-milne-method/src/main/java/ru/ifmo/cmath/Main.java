@@ -2,7 +2,6 @@ package ru.ifmo.cmath;
 
 import ru.ifmo.cmath.algebra.DifferentialEqSolver;
 import ru.ifmo.cmath.algebra.Function;
-import ru.ifmo.cmath.algebra.LagrangePolynomial;
 import ru.ifmo.cmath.algebra.MathFunctions;
 import ru.ifmo.cmath.graphing.GraphBuilder;
 import ru.ifmo.cmath.utils.Point;
@@ -50,16 +49,17 @@ public class Main {
                 readAndSetAccuracy();
                 boolean customStep = readStep();
 
-                List<Point> axisData = solver.solveByMilne(chosenFunc, initialPoint, end);
-                printResult(axisData);
+                List<Point> axisDataEuler = solver.solveByEuler(chosenFunc, initialPoint, end);
+                List<Point> axisDataMilne = solver.solveByMilne(chosenFunc, initialPoint, end);
+                printResult(axisDataEuler, axisDataMilne);
                 Function lagrangianPolynomial = null;
-                try {
-                    lagrangianPolynomial = new LagrangePolynomial().setAxisData(axisData).build();
-                } catch (Throwable e) {
-                    print(e.getMessage()+"\n");
-                }
+//                try {
+//                    lagrangianPolynomial = new LagrangePolynomial().setAxisData(axisData).build();
+//                } catch (Throwable e) {
+//                    print(e.getMessage()+"\n");
+//                }
                 if (lagrangianPolynomial == null)
-                    GraphBuilder.setData(chosenFunc, axisData);
+                    GraphBuilder.setData(chosenFunc, axisDataEuler);
                 else
                     GraphBuilder.setData(chosenFunc, lagrangianPolynomial);
                 new GraphBuilder().run();
@@ -72,16 +72,16 @@ public class Main {
         }
     }
 
-    private void printResult(List<Point> points) {
-        int size = String.valueOf(points.size()).length();
+    private void printResult(List<Point> pointsEuler, List<Point> pointsMilne) {
+        int size = String.valueOf(pointsEuler.size()).length();
         String line = String.join("", Collections.nCopies(size + 44, "-"));
         /* Build a header of the tabular */
         StringBuilder builder = new StringBuilder(
-                String.format("+%s+\n| %" + size + "s |       Axis X       |       Axis Y       |\n+%s+\n", line, "№i", line)
+                String.format("+%s+\n| %" + size + "s |       Axis X       |       Axis Y       |" + " |     Axis Y Milne      |\n+%s+\n", line, "№i", line)
         );
         /* Build a result tabular */
-        for (int i = 1; i <= points.size(); i++) {
-            builder.append(String.format("| %" + size + "s | %018.9f | %018.9f |\n", i,  points.get(i - 1).getX(), points.get(i - 1).getY()));
+        for (int i = 1; i <= pointsEuler.size(); i++) {
+            builder.append(String.format("| %" + size + "s | %018.9f | %018.9f | | %018.9f |\n", i,  pointsEuler.get(i - 1).getX(), pointsEuler.get(i - 1).getY(), pointsMilne.get(i - 1).getY()));
         }
         /* Print a result */
         System.out.println(builder.append(String.format("+%s+\n", line)));

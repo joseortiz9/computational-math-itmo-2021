@@ -13,14 +13,30 @@ public class DifferentialEqSolver {
     private double ACCURACY = BASE_ACCURACY;
     private double STEP = 0.01;
 
+    public List<Point> solveByEuler(Function function, Point initialPoint, double end) {
+        List<Point> points = new ArrayList<>();
+        points.add(initialPoint);
+
+        int i = 1;
+        double initialXi = initialPoint.getX() + STEP;
+        for (double xi = initialXi; xi <= end; xi += STEP) {
+            double x_1 = points.get(i-1).getX();
+            double y_1 = points.get(i-1).getY();
+            double yi = y_1 + STEP * function.apply(x_1, y_1);
+            points.add(new Point(xi, yi));
+            i++;
+        }
+        return points;
+    }
+
     public List<Point> solveByMilne(Function function, Point initialPoint, double end) {
         List<Point> points = new ArrayList<>();
         points.add(initialPoint);
 
         /* Find a count of segments using specified inequality. */
-        //int count = (int) ceil((end - initialPoint.getX()) / pow(ACCURACY, 0.25));
-        /* Calculate a segments' length. */
-        //double step = (end - initialPoint.getX()) / count;
+//        int count = (int) ceil((end - initialPoint.getX()) / pow(ACCURACY, 0.25));
+//        /* Calculate a segments' length. */
+//        double step = (end - initialPoint.getX()) / count;
 
         int i = 1;
         double initialXi = initialPoint.getX() + STEP;

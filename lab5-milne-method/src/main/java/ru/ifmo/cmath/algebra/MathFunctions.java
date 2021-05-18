@@ -11,6 +11,7 @@ public class MathFunctions {
         availableFunctions.add(new Function("1+x+y/(1-x^2)", "x", "y"));
         availableFunctions.add(new Function("log(x)", "x"));
         availableFunctions.add(new Function("3x^2", "x", "y"));
+        availableFunctions.add(new Function("y-x^3", "x", "y"));
     }
 
     public ArrayList<Function> getAvailableFunctions() {
