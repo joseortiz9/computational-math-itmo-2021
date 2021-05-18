@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private final static Double[] DEFAULT_X_POINTS = new Double[] {0.3, -2.554, 12.00321, 3.1 };
+    private final static Double[] DEFAULT_X_POINTS = new Double[] {0.3, -2.554, 12.00321, 3.1, 1.2, 5.1, 9.875};
 
     private final Scanner scanner = new Scanner(System.in);
     private final MathFunctions mathFunctions = new MathFunctions();
@@ -51,6 +51,7 @@ public class Main {
 
                 print("Generating lagrange function...\n");
                 IFunction lagrangePolynomial = new LagrangePolynomial(DEFAULT_X_POINTS, yPointsChosen).buildFunction();
+                System.out.println(lagrangePolynomial.solveForX(10));
                 if (lagrangePolynomial.getFunction() == null) throw new IllegalArgumentException("Not possible to generate the lagrange function!");
                 print("\n");
 

@@ -51,7 +51,7 @@ public class DifferentialEqSolver {
     }
 
     private Point pointByMilne(Function function, List<Point> points, double xi, int i) {
-        double forecast = 0, forecastEvaluated = 0, correction = 0;
+        double forecast = 0, correction = 0;
 
         double y2 = points.get(i - 2).getY();
         double y4 = points.get(i - 4).getY();
@@ -60,15 +60,12 @@ public class DifferentialEqSolver {
         double f3 = function.apply(points.get(i-3).getX(), points.get(i-3).getY());
 
         forecast = y4 + 4*STEP/3 * (2*f3 - f2 + 2*f1);
-        forecastEvaluated = function.apply(xi, forecast);
-        correction = y2 + STEP/3 * (f2 - 4*f1 + 2*forecastEvaluated);
+        correction = y2 + STEP/3 * (f2 - 4*f1 + 2*function.apply(xi, forecast));
         double yc = 0;
-        do {
-            yc = correction;
-            forecastEvaluated = function.apply(xi, yc);
-            correction = y2 + STEP/3 * (f2 - 4*f1 + 2*forecastEvaluated);
-        } while (Math.abs(correction - yc) >= ACCURACY);
-
+        while (Math.abs(correction - forecast) >= ACCURACY) {
+            forecast = correction;
+            correction = y2 + STEP/3 * (f2 - 4*f1 + 2*function.apply(xi, forecast));
+        }
         return new Point(xi, correction);
     }
 
