@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/lab3-simpson-method/lab3-simpson-method.iml" filepath="$PROJECT_DIR$/lab3-simpson-method/lab3-simpson-method.iml" />
       <module fileurl="file://$PROJECT_DIR$/lab4-lagrange-polynomial/lab4-lagrange-polynomial.iml" filepath="$PROJECT_DIR$/lab4-lagrange-polynomial/lab4-lagrange-polynomial.iml" />
       <module fileurl="file://$PROJECT_DIR$/lab5-milne-method/lab5-milne-method.iml" filepath="$PROJECT_DIR$/lab5-milne-method/lab5-milne-method.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab5-chebyshev-method/lab6-chebyshev-method.iml" filepath="$PROJECT_DIR$/lab5-chebyshev-method/lab6-chebyshev-method.iml" />
     </modules>
   </component>
 </project>
