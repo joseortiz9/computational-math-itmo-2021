@@ -52,6 +52,7 @@ public class GraphBuilder extends Application {
 
 
         lineChart.getData().addAll(series1, series2, series3);
+        //lineChart.getStylesheets().add("ru/ifmo/cmath/graphing/chart-styles.css");
 
         //remove ugly visual points from functions
         removeChartLineSymbol(series1, series2);

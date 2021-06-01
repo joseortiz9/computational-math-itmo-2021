@@ -7,6 +7,10 @@ public class MathFunctions {
 
     {
         availableFunctions.add(new Function("sin(x)/x"));
+        availableFunctions.add(new Function("sin(x) + cos(x)"));
+        availableFunctions.add(new Function("log(x)"));
+        availableFunctions.add(new Function("3x^2"));
+        availableFunctions.add(new Function("x^3"));
     }
 
     public ArrayList<Function> getAvailableFunctions() {
