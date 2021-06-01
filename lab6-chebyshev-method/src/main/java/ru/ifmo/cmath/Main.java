@@ -1,15 +1,11 @@
 package ru.ifmo.cmath;
 
-import ru.ifmo.cmath.algebra.DifferentialEqSolver;
-import ru.ifmo.cmath.algebra.Function;
-import ru.ifmo.cmath.algebra.MathFunctions;
+import ru.ifmo.cmath.algebra.*;
 import ru.ifmo.cmath.graphing.GraphBuilder;
 import ru.ifmo.cmath.utils.Point;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -17,16 +13,16 @@ public class Main {
 
     private final Scanner scanner = new Scanner(System.in);
     private final MathFunctions mathFunctions = new MathFunctions();
-    private final DifferentialEqSolver solver = new DifferentialEqSolver();
 
     public static void main(String[] args) {
         new Main().start();
     }
 
     public void start() {
-        print("+———————————————————————————————+\n" +
-                      "│         Решение ОДУ           │\n" +
-                      "+———————————————————————————————+\n");
+        print("+——————————————————————————————————+\n" +
+                      "│    Полином Лагранжа и Чебышева   │\n" +
+                      "│  на Приближение сложной функции  │\n" +
+                      "+——————————————————————————————————+\n");
 
         while (true) {
             print("Choose a function:\n");
@@ -40,28 +36,30 @@ public class Main {
 
                 Function chosenFunc = mathFunctions.getAvailableFunctions().get(optionSelected-1);
 
-                double x0 = 0, y0 = 0, end = 0, step = 0.001;
-                print("x_0: "); x0 = scanner.nextDouble();
-                print("y_0: "); y0 = scanner.nextDouble();
-                print("last X value: "); end = scanner.nextDouble();
-                Point initialPoint = new Point(x0, y0);
+                double lower = 0, upper = 0;
+                int numNodes = 21;
+                print("a: "); lower = scanner.nextDouble();
+                print("b: "); upper = scanner.nextDouble();
+                print("№ nodes: "); numNodes = scanner.nextInt();
 
-                readAndSetAccuracy();
-                boolean customStep = readStep();
+                if (lower > upper) {
+                    double t = upper;
+                    upper = lower;
+                    lower = t;
+                }
 
-                List<Point> axisDataEuler = solver.solveByEuler(chosenFunc, initialPoint, end);
-                List<Point> axisDataMilne = solver.solveByMilne(chosenFunc, initialPoint, end);
-                printResult(axisDataEuler, axisDataMilne);
-                Function lagrangianPolynomial = null;
-//                try {
-//                    lagrangianPolynomial = new LagrangePolynomial().setAxisData(axisData).build();
-//                } catch (Throwable e) {
-//                    print(e.getMessage()+"\n");
-//                }
-                if (lagrangianPolynomial == null)
-                    GraphBuilder.setData(chosenFunc, axisDataEuler);
-                else
-                    GraphBuilder.setData(chosenFunc, lagrangianPolynomial);
+                ChebyshevPolynomial chebyshevPolynomial = new ChebyshevPolynomial(numNodes);
+                List<Double> xDataWithChebyshev = chebyshevPolynomial.nodesBetween(lower, upper);
+                List<Double> usualXData = nodesBetween(numNodes, lower, upper);
+
+                List<Point> axisData = xDataWithChebyshev.stream()
+                        .map(x -> new Point(x, chosenFunc.apply(x))).collect(Collectors.toList());
+
+                Function lagrangePolynomial = new LagrangePolynomial().setAxisData(axisData).build();
+
+                printResult(axisData);
+
+                GraphBuilder.setData(chosenFunc, lagrangePolynomial, axisData, lower, upper);
                 new GraphBuilder().run();
                 exit();
 
@@ -72,42 +70,33 @@ public class Main {
         }
     }
 
-    private void printResult(List<Point> pointsEuler, List<Point> pointsMilne) {
-        int size = String.valueOf(pointsEuler.size()).length();
-        String line = String.join("", Collections.nCopies(size + 44, "-"));
+    private void printResult(List<Point> axisData) {
+        int size = String.valueOf(axisData.size()).length();
+        String line = String.join("", Collections.nCopies(size + 27, "-"));
         /* Build a header of the tabular */
         StringBuilder builder = new StringBuilder(
-                String.format("+%s+\n| %" + size + "s |       Axis X       |       Axis Y       |" + " |     Axis Y Milne      |\n+%s+\n", line, "№i", line)
+                String.format("+%s+\n| %" + size + "s |    AxisX   |    AxisY   |\n+%s+\n", line, "№i", line)
         );
         /* Build a result tabular */
-        for (int i = 1; i <= pointsEuler.size(); i++) {
-            builder.append(String.format("| %" + size + "s | %018.9f | %018.9f | | %018.9f |\n", i,  pointsEuler.get(i - 1).getX(), pointsEuler.get(i - 1).getY(), pointsMilne.get(i - 1).getY()));
+        for (int i = 1; i <= axisData.size(); i++) {
+            builder.append(String.format("| %" + size + "s | % -2.6f | % -2.6f |\n", i,  axisData.get(i - 1).getX(), axisData.get(i - 1).getY()));
         }
         /* Print a result */
         System.out.println(builder.append(String.format("+%s+\n", line)));
     }
 
-    private void readAndSetAccuracy() {
-        print("accuracy[0..1] or [-1] to use base value: ");
-        double accuracy = scanner.nextDouble();
-        if (accuracy <= 0 || accuracy >= 1) {
-            solver.setAccuracy(DifferentialEqSolver.BASE_ACCURACY);
-            print("Was set the base accuracy = " + DifferentialEqSolver.BASE_ACCURACY + "\n");
-        } else {
-            solver.setAccuracy(accuracy);
+    private List<Double> nodesBetween(int numNodes, double lower, double upper) {
+        if (numNodes < 2) {
+            throw new IllegalArgumentException("Number of nodes can not be less than 2");
         }
-    }
+        List<Double> nodes = new ArrayList<>(numNodes);
 
-    private boolean readStep() {
-        print("step[0..1] or [-1] to use base calculated value: ");
-        double step = scanner.nextDouble();
-        if (step <= 0 || step >= 1 ) {
-            print("Was set the base accuracy... \n");
-            return true;
-        } else {
-            solver.setStep(step);
-            return false;
+        /* Calculate nodes step */
+        double step = (upper - lower) / (numNodes - 1);
+        for (int i = 0; i < numNodes; i++) {
+            nodes.add(lower + i * step);
         }
+        return nodes;
     }
 
     private static void print(String pattern, Object... args) {

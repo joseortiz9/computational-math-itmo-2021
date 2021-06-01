@@ -8,6 +8,7 @@ public class Function {
     private final Expression expression;
 
     public Function(String expression) {
+        this.exp = expression;
         this.expression = new ExpressionBuilder(expression).variable("x").build();
     }
 
